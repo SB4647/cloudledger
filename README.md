@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CloudLedger
 
-## Getting Started
+**CloudLedger** is a modern digital ledger for tracking, understanding, and organizing financial life —  
+built for developers, founders, and people who want their money to finally make sense.
 
-First, run the development server:
+This project is designed as a long-term platform:  
+fast, private, automation-friendly, and architected to scale from personal use to real products.
+
+---
+
+## 🧭 Mission
+
+The goal of CloudLedger is simple:
+
+> Give individuals and small teams the same clarity and control over their finances that large organizations get from enterprise tooling — without the complexity, lock-in, or noise.
+
+CloudLedger focuses on:
+
+- transparency over transactions
+- meaningful financial structure
+- calm, low-friction interfaces
+- systems that compound over time
+
+---
+
+## 🧱 Technology
+
+CloudLedger is built with modern full-stack architecture:
+
+- **Next.js** — application framework & rendering engine
+- **React** — UI layer
+- **TypeScript** — correctness & long-term maintainability
+- **Vercel** — hosting, CI/CD, edge delivery
+- **Cloudflare** — DNS, security, and performance layer
+
+The project is structured to support:
+
+- static content
+- server-rendered pages
+- API routes
+- future micro-services
+- background jobs and automation
+
+---
+
+## 🚀 Getting Started
+
+Install dependencies and run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
