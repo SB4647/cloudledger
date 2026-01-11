@@ -37,29 +37,33 @@ export default function ReduceAzureCosts() {
         </ul>
       </div>
 
+      <p style={{ margin: "1.5rem 0" }}>
+        Next step: use the{" "}
+        <a href="/tools/cloud-cost-estimator">Cloud Cost Estimator</a> to
+        forecast your monthly spend and sanity-check your baseline.
+      </p>
+
       <section style={{ marginTop: "2.5rem" }}>
         <h2>Why cloud costs explode</h2>
-        <p>
-          Most Azure “bill shock” comes from a few repeatable patterns:
-          <ul>
-            <li>
-              <strong>Sprawl:</strong> multiple environments, regions, and
-              resource groups with no ownership map
-            </li>
-            <li>
-              <strong>Always-on:</strong> dev/test resources left running 24/7
-              because turning things off is manual
-            </li>
-            <li>
-              <strong>Hidden multipliers:</strong> data egress, log ingestion,
-              backups, and “small per-GB” charges that stack up
-            </li>
-            <li>
-              <strong>Wrong defaults:</strong> over-provisioned SKUs chosen
-              early and never revisited
-            </li>
-          </ul>
-        </p>
+        <p>Most Azure “bill shock” comes from a few repeatable patterns:</p>
+        <ul>
+          <li>
+            <strong>Sprawl:</strong> multiple environments, regions, and
+            resource groups with no ownership map
+          </li>
+          <li>
+            <strong>Always-on:</strong> dev/test resources left running 24/7
+            because turning things off is manual
+          </li>
+          <li>
+            <strong>Hidden multipliers:</strong> data egress, log ingestion,
+            backups, and “small per-GB” charges that stack up
+          </li>
+          <li>
+            <strong>Wrong defaults:</strong> over-provisioned SKUs chosen early
+            and never revisited
+          </li>
+        </ul>
         <p>
           The fix is not “be careful.” The fix is: make cost visible, assign
           ownership, then enforce guardrails automatically.
