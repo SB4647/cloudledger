@@ -1,53 +1,98 @@
 # CloudLedger
 
-**CloudLedger** is a modern digital ledger for tracking, understanding, and organizing financial life —  
-built for developers, founders, and people who want their money to finally make sense.
+CloudLedger is a modern engineering platform for understanding and reducing cloud infrastructure costs.  
+It combines practical technical guides with lightweight, purpose-built tools for developers, founders, and small teams running on AWS and Azure.
 
-This project is designed as a long-term platform:  
-fast, private, automation-friendly, and architected to scale from personal use to real products.
-
----
-
-## 🧭 Mission
-
-The goal of CloudLedger is simple:
-
-> Give individuals and small teams the same clarity and control over their finances that large organizations get from enterprise tooling — without the complexity, lock-in, or noise.
-
-CloudLedger focuses on:
-
-- transparency over transactions
-- meaningful financial structure
-- calm, low-friction interfaces
-- systems that compound over time
+The goal is simple:  
+make cloud costs predictable, transparent, and controllable — without slowing product development.
 
 ---
 
-## 🧱 Technology
+## What This Is
 
-CloudLedger is built with modern full-stack architecture:
+CloudLedger is not a blog.  
+It is an engineering workbench:
 
-- **Next.js** — application framework & rendering engine
-- **React** — UI layer
-- **TypeScript** — correctness & long-term maintainability
-- **Vercel** — hosting, CI/CD, edge delivery
-- **Cloudflare** — DNS, security, and performance layer
+- long-form technical guides
+- interactive cost tools
+- case studies and field notes
+- systems that turn cloud spend into something you can reason about
 
-The project is structured to support:
-
-- static content
-- server-rendered pages
-- API routes
-- future micro-services
-- background jobs and automation
+It is built to compound quietly over time.
 
 ---
 
-## 🚀 Getting Started
+## Technology
 
-Install dependencies and run the development server:
+- Next.js (App Router)
+- React
+- TypeScript
+- Vercel (hosting & CI/CD)
+- Cloudflare (DNS & edge delivery)
 
-```bash
-npm install
-npm run dev
-```
+UI is intentionally minimal and fast.  
+Most styling is done inline for speed and clarity while the platform evolves.
+
+---
+
+## Getting Started
+
+Install dependencies and run the dev server:
+
+    npm install
+    npm run dev
+
+Build for production:
+
+    npm run build
+    npm start
+
+Available scripts: dev, build, start, lint
+
+---
+
+## Project Structure
+
+Key files and directories:
+
+- app/page.tsx — Home page
+- app/layout.tsx — Root layout and global styles
+- app/guides/page.tsx — Guides index
+- app/guides/reduce-azure-costs/page.tsx — First pillar guide
+- app/tools/page.tsx — Tools index
+- app/tools/cloud-cost-estimator/page.tsx — Cloud Cost Estimator tool
+- app/cases/page.tsx — Case studies index (placeholder)
+- app/resources/page.tsx — Resources index (placeholder)
+
+---
+
+## Current Features
+
+- Pillar guide: How to Reduce Azure Costs for Small Teams
+- Tool: Cloud Cost Estimator
+  - category-based inputs
+  - live totals
+  - 10% and 20% buffer scenarios
+- Fully connected internal navigation between guides and tools
+
+---
+
+## Near-Term Roadmap
+
+- Add waste-reduction scenarios to estimator
+- Add cloud cost forecasting guide
+- Add first real case study
+- Add additional small planning tools
+
+---
+
+## Philosophy
+
+CloudLedger is designed to grow slowly, deliberately, and visibly.  
+No hype. No noise. No dashboards for the sake of dashboards.
+
+Just calm, practical systems for understanding where money goes — and how to make it behave.
+
+---
+
+Last updated: 2026-01-12
