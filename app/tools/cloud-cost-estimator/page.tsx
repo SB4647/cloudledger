@@ -1,6 +1,6 @@
 "use client";
 
-import { CSSProperties, useState } from "react";
+import { CSSProperties, useMemo, useState } from "react";
 
 export default function CloudCostEstimator() {
   const [compute, setCompute] = useState(0);
@@ -50,6 +50,37 @@ export default function CloudCostEstimator() {
     { label: "Other", value: other, set: setOther },
   ];
 
+  const breakdown = useMemo(
+    () => [
+      { name: "Compute", value: compute },
+      { name: "Storage", value: storage },
+      { name: "Logs & Telemetry", value: logs },
+      { name: "Bandwidth", value: bandwidth },
+      { name: "Other", value: other },
+    ],
+    [compute, storage, logs, bandwidth, other]
+  );
+
+  const top = useMemo(() => {
+    const sorted = [...breakdown].sort((a, b) => b.value - a.value);
+    return sorted[0];
+  }, [breakdown]);
+
+  const topHint = useMemo(() => {
+    switch (top.name) {
+      case "Compute":
+        return "Look for idle VMs/AKS nodes, oversized App Service plans, and non-prod environments that can auto-shutdown off-hours.";
+      case "Storage":
+        return "Check for snapshot/backup sprawl, default premium tiers, and lifecycle rules to move cold data to cheaper tiers.";
+      case "Logs & Telemetry":
+        return "Logging costs explode fast—reduce noisy logs, tune sampling, and set retention limits (especially in non-prod).";
+      case "Bandwidth":
+        return "Investigate egress, cross-region traffic, and chatty services. Small routing/region choices can multiply spend.";
+      default:
+        return "Audit for orphaned resources (disks, public IPs), old environments, and anything without an owner/tag.";
+    }
+  }, [top.name]);
+
   return (
     <main style={{ padding: "4rem", maxWidth: "900px", lineHeight: 1.7 }}>
       <h1>Cloud Cost Estimator</h1>
@@ -96,6 +127,36 @@ export default function CloudCostEstimator() {
         <p style={{ marginBottom: 0 }}>
           <strong>With 20% buffer:</strong> ${buffer20.toFixed(2)}
         </p>
+      </div>
+
+      <div style={cardStyle}>
+        <h2 style={{ marginTop: 0 }}>Insights</h2>
+
+        {total <= 0 ? (
+          <p style={{ opacity: 0.9, marginBottom: 0 }}>
+            Add a few numbers above and I’ll highlight the biggest cost driver
+            and what to fix first.
+          </p>
+        ) : (
+          <>
+            <p style={{ marginBottom: "0.75rem" }}>
+              Your highest cost area is <strong>{top.name}</strong>.
+            </p>
+
+            <p style={{ opacity: 0.9 }}>{topHint}</p>
+
+            <p style={{ marginTop: "1.25rem", marginBottom: 0 }}>
+              Want a step-by-step plan? Start with{" "}
+              <a
+                href="/guides/reduce-azure-costs"
+                style={{ fontWeight: 600, textDecoration: "underline" }}
+              >
+                How to Reduce Azure Costs for Small Teams
+              </a>
+              .
+            </p>
+          </>
+        )}
       </div>
 
       <div style={cardStyle}>
