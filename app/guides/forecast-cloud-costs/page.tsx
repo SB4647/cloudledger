@@ -23,10 +23,63 @@ export default function ForecastCloudCosts() {
 
       <section>
         <h2>Why most cloud forecasts fail</h2>
+        <p>
+          Cloud forecasts usually fail for one simple reason: they treat cloud
+          spend as a fixed monthly bill instead of a system driven by usage,
+          behavior, and constant change.
+        </p>
+
+        <p>
+          Traditional budgeting assumes stable inputs. Cloud infrastructure has
+          the opposite properties:
+        </p>
+
+        <ul>
+          <li>workloads scale automatically</li>
+          <li>engineers provision resources continuously</li>
+          <li>pricing changes over time</li>
+          <li>usage patterns evolve as the product grows</li>
+        </ul>
+
+        <p>
+          When teams try to forecast cloud costs using static spreadsheets, they
+          are effectively pretending this complexity does not exist.
+        </p>
+
+        <p>
+          Reliable forecasts begin when you stop asking “What will our bill be?”
+          and start asking “What behaviors and systems create our bill?”
+        </p>
       </section>
 
       <section>
         <h2>Understanding your baseline costs</h2>
+
+        <p>
+          Your baseline cost is the minimum amount you pay each month simply to
+          keep the system alive.
+        </p>
+
+        <p>It includes:</p>
+
+        <ul>
+          <li>production compute</li>
+          <li>core databases and storage</li>
+          <li>essential networking and security services</li>
+          <li>monitoring, logging, and backups</li>
+        </ul>
+
+        <p>
+          The key mistake teams make is mixing baseline costs with experimental
+          or growth-driven costs. When you separate them, forecasting becomes
+          radically more stable.
+        </p>
+
+        <p>
+          A healthy baseline is boring, predictable, and slow-changing. If yours
+          swings wildly month to month, you don’t have a forecast problem — you
+          have an architecture problem.
+        </p>
       </section>
 
       <section>
