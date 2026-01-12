@@ -1,6 +1,13 @@
 export default function ForecastCloudCosts() {
   return (
-    <main style={{ padding: "4rem", maxWidth: "900px", lineHeight: 1.7 }}>
+    <main
+      style={{
+        padding: "4rem",
+        maxWidth: "900px",
+        lineHeight: 1.7,
+        margin: "0 auto",
+      }}
+    >
       <h1>How to Forecast Cloud Costs (Without Lying to Yourself)</h1>
 
       <p style={{ fontSize: "1.1rem", opacity: 0.9 }}>
@@ -21,8 +28,16 @@ export default function ForecastCloudCosts() {
         forecast.
       </p>
 
-      <section>
+      <section style={{ marginTop: "3rem" }}>
         <h2>Why most cloud forecasts fail</h2>
+        <div
+          style={{
+            height: "1px",
+            background: "#222",
+            margin: "0.75rem 0 1.25rem 0",
+          }}
+        />
+
         <p>
           Cloud forecasts usually fail for one simple reason: they treat cloud
           spend as a fixed monthly bill instead of a system driven by usage,
@@ -34,12 +49,14 @@ export default function ForecastCloudCosts() {
           the opposite properties:
         </p>
 
-        <ul>
-          <li>workloads scale automatically</li>
-          <li>engineers provision resources continuously</li>
-          <li>pricing changes over time</li>
-          <li>usage patterns evolve as the product grows</li>
-        </ul>
+        <div style={{ paddingLeft: "1rem", marginTop: "0.75rem" }}>
+          <ul>
+            <li>workloads scale automatically</li>
+            <li>engineers provision resources continuously</li>
+            <li>pricing changes over time</li>
+            <li>usage patterns evolve as the product grows</li>
+          </ul>
+        </div>
 
         <p>
           When teams try to forecast cloud costs using static spreadsheets, they
@@ -52,8 +69,15 @@ export default function ForecastCloudCosts() {
         </p>
       </section>
 
-      <section>
+      <section style={{ marginTop: "3rem" }}>
         <h2>Understanding your baseline costs</h2>
+        <div
+          style={{
+            height: "1px",
+            background: "#222",
+            margin: "0.75rem 0 1.25rem 0",
+          }}
+        />
 
         <p>
           Your baseline cost is the minimum amount you pay each month simply to
@@ -62,12 +86,14 @@ export default function ForecastCloudCosts() {
 
         <p>It includes:</p>
 
-        <ul>
-          <li>production compute</li>
-          <li>core databases and storage</li>
-          <li>essential networking and security services</li>
-          <li>monitoring, logging, and backups</li>
-        </ul>
+        <div style={{ paddingLeft: "1rem", marginTop: "0.75rem" }}>
+          <ul>
+            <li>production compute</li>
+            <li>core databases and storage</li>
+            <li>essential networking and security services</li>
+            <li>monitoring, logging, and backups</li>
+          </ul>
+        </div>
 
         <p>
           The key mistake teams make is mixing baseline costs with experimental
@@ -82,20 +108,49 @@ export default function ForecastCloudCosts() {
         </p>
       </section>
 
-      <section>
+      <section style={{ marginTop: "3rem" }}>
         <h2>Growth drivers that actually move the bill</h2>
+        <div
+          style={{
+            height: "1px",
+            background: "#222",
+            margin: "0.75rem 0 1.25rem 0",
+          }}
+        />
       </section>
 
-      <section>
+      <section style={{ marginTop: "3rem" }}>
         <h2>Scenario modeling: best case, expected, worst case</h2>
+        <div
+          style={{
+            height: "1px",
+            background: "#222",
+            margin: "0.75rem 0 1.25rem 0",
+          }}
+        />
       </section>
 
-      <section>
+      <section style={{ marginTop: "3rem" }}>
         <h2>How to communicate forecasts to non-engineers</h2>
+        <div
+          style={{
+            height: "1px",
+            background: "#222",
+            margin: "0.75rem 0 1.25rem 0",
+          }}
+        />
       </section>
 
-      <section>
+      <section style={{ marginTop: "3rem" }}>
         <h2>Connecting forecasts to real controls</h2>
+        <div
+          style={{
+            height: "1px",
+            background: "#222",
+            margin: "0.75rem 0 1.25rem 0",
+          }}
+        />
+
         <p>
           Use the{" "}
           <a
