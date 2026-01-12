@@ -20,22 +20,54 @@ export default function CloudCostEstimator() {
   const monthlySavings = total - reducedTotal;
   const yearlySavings = monthlySavings * 12;
 
-  const inputStyle: CSSProperties = {
-    padding: "0.5rem 0.6rem",
-    borderRadius: 6,
-    border: "1px solid #444",
-    background: "#111",
-    color: "#fff",
-    fontSize: "1rem",
-    width: "100%",
+  const pageStyle: CSSProperties = {
+    padding: "4rem",
+    maxWidth: "1100px",
+    margin: "0 auto",
+    lineHeight: 1.7,
+  };
+
+  const gridStyle: CSSProperties = {
+    display: "grid",
+    gap: "2rem",
+    gridTemplateColumns: "1fr",
+    marginTop: "2rem",
+  };
+
+  const leftColStyle: CSSProperties = {
+    display: "grid",
+    gap: "1.25rem",
+    alignContent: "start",
+  };
+
+  const rightColStyle: CSSProperties = {
+    display: "grid",
+    gap: "1.25rem",
+    alignContent: "start",
   };
 
   const cardStyle: CSSProperties = {
     padding: "1.5rem",
     border: "1px solid #333",
-    borderRadius: 10,
+    borderRadius: 12,
     background: "#0d0d0d",
-    marginTop: "2rem",
+  };
+
+  const cardTitleStyle: CSSProperties = {
+    marginTop: 0,
+    marginBottom: "0.75rem",
+    fontSize: "1.15rem",
+  };
+
+  const inputStyle: CSSProperties = {
+    padding: "0.6rem 0.7rem",
+    borderRadius: 8,
+    border: "1px solid #444",
+    background: "#111",
+    color: "#fff",
+    fontSize: "1rem",
+    width: "100%",
+    outline: "none",
   };
 
   const fields: Array<{
@@ -69,134 +101,176 @@ export default function CloudCostEstimator() {
   const topHint = useMemo(() => {
     switch (top.name) {
       case "Compute":
-        return "Look for idle VMs/AKS nodes, oversized App Service plans, and non-prod environments that can auto-shutdown off-hours.";
+        return "Start here: find idle VMs/AKS nodes, oversized App Service plans, and anything non-prod that can auto-shutdown off-hours.";
       case "Storage":
-        return "Check for snapshot/backup sprawl, default premium tiers, and lifecycle rules to move cold data to cheaper tiers.";
+        return "Start here: snapshot/backup sprawl + default premium tiers. Add lifecycle rules and review retention.";
       case "Logs & Telemetry":
-        return "Logging costs explode fast—reduce noisy logs, tune sampling, and set retention limits (especially in non-prod).";
+        return "Start here: noisy logs + long retention. Tune sampling, reduce chatty apps, and cap retention (especially non-prod).";
       case "Bandwidth":
-        return "Investigate egress, cross-region traffic, and chatty services. Small routing/region choices can multiply spend.";
+        return "Start here: egress + cross-region traffic. Small routing/region choices can multiply spend.";
       default:
-        return "Audit for orphaned resources (disks, public IPs), old environments, and anything without an owner/tag.";
+        return "Start here: orphaned resources (disks/public IPs), old environments, and anything without an owner/tag.";
     }
   }, [top.name]);
 
   return (
-    <main style={{ padding: "4rem", maxWidth: "900px", lineHeight: 1.7 }}>
-      <h1>Cloud Cost Estimator</h1>
-      <p style={{ opacity: 0.9 }}>
-        Rough monthly estimate. Enter your current or expected spend by
-        category.
-      </p>
+    <main style={pageStyle}>
+      <header style={{ marginBottom: "1.5rem" }}>
+        <h1 style={{ marginBottom: "0.5rem" }}>Cloud Cost Estimator</h1>
+        <p style={{ opacity: 0.9, marginTop: 0, maxWidth: "72ch" }}>
+          Rough monthly estimate. Enter your current or expected spend by
+          category. You’ll get a baseline, buffers, and a quick “fix-first”
+          recommendation.
+        </p>
+      </header>
 
+      {/* Responsive desktop grid without Tailwind */}
       <div
         style={{
-          display: "grid",
-          gap: "1rem",
-          maxWidth: "420px",
-          marginTop: "2rem",
+          ...gridStyle,
         }}
       >
-        {fields.map((f) => (
-          <label
-            key={f.label}
-            style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}
-          >
-            {f.label} ($)
-            <input
-              type="number"
-              inputMode="decimal"
-              min={0}
-              step="any"
-              value={f.value}
-              onChange={(e) => f.set(Number(e.target.value) || 0)}
-              style={inputStyle}
-            />
-          </label>
-        ))}
-      </div>
+        {/* Desktop media query via inline style trick (supported by Next/React) */}
+        <style>
+          {`
+            @media (min-width: 900px) {
+              .cc-grid { grid-template-columns: 1fr 1fr; }
+            }
+          `}
+        </style>
 
-      <div style={cardStyle}>
-        <h2 style={{ marginTop: 0 }}>Estimate</h2>
-        <p>
-          <strong>Total:</strong> ${total.toFixed(2)}
-        </p>
-        <p>
-          <strong>With 10% buffer:</strong> ${buffer10.toFixed(2)}
-        </p>
-        <p style={{ marginBottom: 0 }}>
-          <strong>With 20% buffer:</strong> ${buffer20.toFixed(2)}
-        </p>
-      </div>
+        <div className="cc-grid" style={gridStyle}>
+          {/* LEFT: Inputs + Estimate */}
+          <div style={leftColStyle}>
+            <div style={cardStyle}>
+              <h2 style={cardTitleStyle}>Inputs</h2>
 
-      <div style={cardStyle}>
-        <h2 style={{ marginTop: 0 }}>Insights</h2>
-
-        {total <= 0 ? (
-          <p style={{ opacity: 0.9, marginBottom: 0 }}>
-            Add a few numbers above and I’ll highlight the biggest cost driver
-            and what to fix first.
-          </p>
-        ) : (
-          <>
-            <p style={{ marginBottom: "0.75rem" }}>
-              Your highest cost area is <strong>{top.name}</strong>.
-            </p>
-
-            <p style={{ opacity: 0.9 }}>{topHint}</p>
-
-            <p style={{ marginTop: "1.25rem", marginBottom: 0 }}>
-              Want a step-by-step plan? Start with{" "}
-              <a
-                href="/guides/reduce-azure-costs"
-                style={{ fontWeight: 600, textDecoration: "underline" }}
+              <div
+                style={{
+                  display: "grid",
+                  gap: "1rem",
+                  maxWidth: "520px",
+                }}
               >
-                How to Reduce Azure Costs for Small Teams
-              </a>
-              .
-            </p>
-          </>
-        )}
-      </div>
+                {fields.map((f) => (
+                  <label
+                    key={f.label}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: "0.4rem",
+                    }}
+                  >
+                    <span style={{ fontWeight: 600 }}>{f.label} ($)</span>
+                    <input
+                      type="number"
+                      inputMode="decimal"
+                      min={0}
+                      step="any"
+                      value={f.value}
+                      onChange={(e) => f.set(Number(e.target.value) || 0)}
+                      style={inputStyle}
+                    />
+                  </label>
+                ))}
+              </div>
+            </div>
 
-      <div style={cardStyle}>
-        <h2 style={{ marginTop: 0 }}>Savings Scenario</h2>
+            <div style={cardStyle}>
+              <h2 style={cardTitleStyle}>Estimate</h2>
+              <p style={{ margin: "0.25rem 0" }}>
+                <strong>Total:</strong> ${total.toFixed(2)}
+              </p>
+              <p style={{ margin: "0.25rem 0" }}>
+                <strong>With 10% buffer:</strong> ${buffer10.toFixed(2)}
+              </p>
+              <p style={{ margin: "0.25rem 0 0 0" }}>
+                <strong>With 20% buffer:</strong> ${buffer20.toFixed(2)}
+              </p>
+            </div>
+          </div>
 
-        <div style={{ marginTop: "1rem", maxWidth: "520px" }}>
-          <label style={{ display: "block", marginBottom: "0.5rem" }}>
-            Estimated waste reduction: <strong>{reduction}%</strong>
-          </label>
-          <input
-            type="range"
-            min={0}
-            max={40}
-            value={reduction}
-            onChange={(e) => setReduction(Number(e.target.value))}
-            style={{ width: "100%" }}
-          />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              opacity: 0.8,
-            }}
-          >
-            <span>0%</span>
-            <span>40%</span>
+          {/* RIGHT: Insights + Scenario */}
+          <div style={rightColStyle}>
+            <div style={cardStyle}>
+              <h2 style={cardTitleStyle}>Insights</h2>
+
+              {total <= 0 ? (
+                <p style={{ opacity: 0.9, marginBottom: 0 }}>
+                  Add a few numbers and I’ll flag the biggest driver + what to
+                  fix first.
+                </p>
+              ) : (
+                <>
+                  <p style={{ marginTop: 0, marginBottom: "0.75rem" }}>
+                    Your biggest cost driver is <strong>{top.name}</strong>.
+                  </p>
+
+                  <p style={{ opacity: 0.9, marginTop: 0 }}>{topHint}</p>
+
+                  <p style={{ marginTop: "1rem", marginBottom: 0 }}>
+                    Next: read{" "}
+                    <a
+                      href="/guides/reduce-azure-costs"
+                      style={{ fontWeight: 700, textDecoration: "underline" }}
+                    >
+                      How to Reduce Azure Costs for Small Teams
+                    </a>{" "}
+                    and apply the top 2 fixes for your highest category.
+                  </p>
+                </>
+              )}
+            </div>
+
+            <div style={cardStyle}>
+              <h2 style={cardTitleStyle}>Savings Scenario</h2>
+
+              <div style={{ marginTop: "0.75rem" }}>
+                <label style={{ display: "block", marginBottom: "0.5rem" }}>
+                  Estimated waste reduction: <strong>{reduction}%</strong>
+                </label>
+
+                <input
+                  type="range"
+                  min={0}
+                  max={40}
+                  value={reduction}
+                  onChange={(e) => setReduction(Number(e.target.value))}
+                  style={{ width: "100%" }}
+                />
+
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    opacity: 0.8,
+                    marginTop: "0.35rem",
+                  }}
+                >
+                  <span>0%</span>
+                  <span>40%</span>
+                </div>
+              </div>
+
+              <hr style={{ margin: "1rem 0", borderColor: "#333" }} />
+
+              <p style={{ margin: "0.25rem 0" }}>
+                <strong>Projected new total:</strong> ${reducedTotal.toFixed(2)}
+              </p>
+              <p style={{ margin: "0.25rem 0" }}>
+                <strong>Monthly savings:</strong> ${monthlySavings.toFixed(2)}
+              </p>
+              <p style={{ margin: "0.25rem 0 0 0" }}>
+                <strong>Yearly savings:</strong> ${yearlySavings.toFixed(2)}
+              </p>
+
+              <p style={{ marginTop: "1rem", opacity: 0.85 }}>
+                Rule of thumb: 10–30% reduction is achievable in 30–90 days once
+                you add ownership + guardrails.
+              </p>
+            </div>
           </div>
         </div>
-
-        <hr style={{ margin: "1rem 0", borderColor: "#333" }} />
-
-        <p>
-          <strong>Projected new total:</strong> ${reducedTotal.toFixed(2)}
-        </p>
-        <p>
-          <strong>Monthly savings:</strong> ${monthlySavings.toFixed(2)}
-        </p>
-        <p style={{ marginBottom: 0 }}>
-          <strong>Yearly savings:</strong> ${yearlySavings.toFixed(2)}
-        </p>
       </div>
     </main>
   );
