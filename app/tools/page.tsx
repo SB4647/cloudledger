@@ -8,6 +8,11 @@ export default function Tools() {
         <li>
           <a href="/tools/cloud-cost-estimator">Cloud Cost Estimator</a>
         </li>
+        <li>
+          <a href="/guides/forecast-cloud-costs">
+            How to Forecast Cloud Costs (Without Lying to Yourself)
+          </a>
+        </li>
       </ul>
     </main>
   );
