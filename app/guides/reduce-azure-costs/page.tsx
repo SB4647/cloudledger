@@ -39,8 +39,10 @@ export default function ReduceAzureCosts() {
 
       <p style={{ margin: "1.5rem 0" }}>
         Next step: use the{" "}
-        <a href="/tools/cloud-cost-estimator">Cloud Cost Estimator</a> to
-        forecast your monthly spend and sanity-check your baseline.
+        <a href="/tools/cloud-cost-estimator" style={{ fontWeight: 600 }}>
+          Cloud Cost Estimator
+        </a>{" "}
+        to forecast your monthly spend and sanity-check your baseline.
       </p>
 
       <div
@@ -55,8 +57,10 @@ export default function ReduceAzureCosts() {
         <strong>Try it now:</strong>
         <p style={{ margin: "0.5rem 0 0 0" }}>
           Plug your current numbers into the{" "}
-          <a href="/tools/cloud-cost-estimator">Cloud Cost Estimator</a> and
-          explore how much waste you could realistically remove in the next
+          <a href="/tools/cloud-cost-estimator" style={{ fontWeight: 600 }}>
+            Cloud Cost Estimator
+          </a>{" "}
+          and explore how much waste you could realistically remove in the next
           30–90 days.
         </p>
       </div>

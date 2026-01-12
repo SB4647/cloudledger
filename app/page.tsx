@@ -32,11 +32,14 @@ export default function Home() {
         <strong>Start here:</strong>
         <p style={{ margin: "0.5rem 0 0 0" }}>
           Read{" "}
-          <a href="/guides/reduce-azure-costs">
+          <a href="/guides/reduce-azure-costs" style={{ fontWeight: 600 }}>
             How to Reduce Azure Costs for Small Teams
           </a>{" "}
           or jump straight into the{" "}
-          <a href="/tools/cloud-cost-estimator">Cloud Cost Estimator</a>.
+          <a href="/tools/cloud-cost-estimator" style={{ fontWeight: 600 }}>
+            Cloud Cost Estimator
+          </a>
+          .
         </p>
       </div>
 

@@ -5,7 +5,7 @@ export default function Guides() {
       <p>Deep, practical engineering guides for reducing cloud costs.</p>
       <ul>
         <li>
-          <a href="/guides/reduce-azure-costs">
+          <a href="/guides/reduce-azure-costs" style={{ fontWeight: 600 }}>
             How to Reduce Azure Costs for Small Teams
           </a>
         </li>
