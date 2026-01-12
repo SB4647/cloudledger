@@ -43,6 +43,24 @@ export default function ReduceAzureCosts() {
         forecast your monthly spend and sanity-check your baseline.
       </p>
 
+      <div
+        style={{
+          margin: "2rem 0",
+          padding: "1rem 1.25rem",
+          border: "1px solid #333",
+          borderRadius: 8,
+          background: "#0d0d0d",
+        }}
+      >
+        <strong>Try it now:</strong>
+        <p style={{ margin: "0.5rem 0 0 0" }}>
+          Plug your current numbers into the{" "}
+          <a href="/tools/cloud-cost-estimator">Cloud Cost Estimator</a> and
+          explore how much waste you could realistically remove in the next
+          30–90 days.
+        </p>
+      </div>
+
       <section style={{ marginTop: "2.5rem" }}>
         <h2>Why cloud costs explode</h2>
         <p>Most Azure “bill shock” comes from a few repeatable patterns:</p>
