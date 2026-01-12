@@ -82,10 +82,17 @@ const linkStyle: CSSProperties = {
   opacity: 0.85,
 };
 
+const bodyStyle: CSSProperties = {
+  background: "#000",
+  color: "#fff",
+  minHeight: "100vh",
+};
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body
+        style={bodyStyle}
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <header style={headerStyle}>
@@ -113,7 +120,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </div>
         </header>
 
-        {children}
+        {/* Keeps all pages aligned under the same container */}
+        <div style={containerStyle}>{children}</div>
       </body>
     </html>
   );
