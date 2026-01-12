@@ -9,6 +9,15 @@ export default function ForecastCloudCosts() {
         forecasts that stay accurate as their infrastructure evolves.
       </p>
 
+      <p style={{ marginTop: "1.5rem" }}>
+        If you&apos;re starting from a messy subscription, read{" "}
+        <a href="/guides/reduce-azure-costs">
+          How to Reduce Azure Costs for Small Teams
+        </a>{" "}
+        first. It shows where to reclaim the biggest savings before you
+        forecast.
+      </p>
+
       <section>
         <h2>Why most cloud forecasts fail</h2>
       </section>
