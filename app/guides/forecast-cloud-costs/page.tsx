@@ -11,7 +11,10 @@ export default function ForecastCloudCosts() {
 
       <p style={{ marginTop: "1.5rem" }}>
         If you&apos;re starting from a messy subscription, read{" "}
-        <a href="/guides/reduce-azure-costs" style={{ fontWeight: 600 }}>
+        <a
+          href="/guides/reduce-azure-costs"
+          style={{ fontWeight: 600, textDecoration: "underline" }}
+        >
           How to Reduce Azure Costs for Small Teams
         </a>{" "}
         first. It shows where to reclaim the biggest savings before you
@@ -42,7 +45,10 @@ export default function ForecastCloudCosts() {
         <h2>Connecting forecasts to real controls</h2>
         <p>
           Use the{" "}
-          <a href="/tools/cloud-cost-estimator" style={{ fontWeight: 600 }}>
+          <a
+            href="/tools/cloud-cost-estimator"
+            style={{ fontWeight: 600, textDecoration: "underline" }}
+          >
             Cloud Cost Estimator
           </a>{" "}
           to model your current baseline and test scenarios before committing to

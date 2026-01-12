@@ -6,12 +6,18 @@ export default function Tools() {
 
       <ul style={{ marginTop: "1.5rem" }}>
         <li>
-          <a href="/tools/cloud-cost-estimator" style={{ fontWeight: 600 }}>
+          <a
+            href="/tools/cloud-cost-estimator"
+            style={{ fontWeight: 600, textDecoration: "underline" }}
+          >
             Cloud Cost Estimator
           </a>
         </li>
         <li>
-          <a href="/guides/forecast-cloud-costs" style={{ fontWeight: 600 }}>
+          <a
+            href="/guides/forecast-cloud-costs"
+            style={{ fontWeight: 600, textDecoration: "underline" }}
+          >
             How to Forecast Cloud Costs (Without Lying to Yourself)
           </a>
         </li>
