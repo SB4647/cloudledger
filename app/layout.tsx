@@ -95,6 +95,32 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         style={bodyStyle}
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "CloudLedger",
+              url: "https://cloudledger.dev",
+              description:
+                "CloudLedger is a practical engineering platform for understanding, forecasting, and reducing cloud infrastructure costs.",
+            }),
+          }}
+        />
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "WebSite",
+              name: "CloudLedger",
+              url: "https://cloudledger.dev",
+            }),
+          }}
+        />
+
         <header style={headerStyle}>
           <div style={containerStyle}>
             <nav style={navStyle}>

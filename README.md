@@ -23,6 +23,32 @@ CloudLedger is **not**:
 CloudLedger **is**:
 
 - an engineering workbench
+
+# CloudLedger
+
+**CloudLedger** is a modern engineering platform for understanding, forecasting, and reducing cloud infrastructure costs.  
+It combines long-form technical thinking with lightweight, purpose-built tools for developers, founders, and small teams running on **AWS** and **Azure**.
+
+The goal is deliberately simple:
+
+> Make cloud costs predictable, transparent, and controllable — without slowing product development or engineering velocity.
+
+CloudLedger is designed to feel calm, boring (in the good way), and trustworthy.  
+If your cloud spend behaves erratically, CloudLedger helps you understand _why_ — and what to fix first.
+
+---
+
+## What This Is (and What It Isn’t)
+
+CloudLedger is **not**:
+
+- a generic SaaS billing dashboard
+- a FinOps buzzword factory
+- a pile of charts disconnected from engineering reality
+
+CloudLedger **is**:
+
+- an engineering workbench
 - a thinking aid for cloud cost systems
 - a place where cost becomes something you can reason about
 
@@ -68,8 +94,7 @@ CloudLedger emphasizes:
 
 - defaults
 - automation
-- feedback loops
-  that make the _cheap path_ the easy path.
+- feedback loops that make the _cheap path_ the easy path.
 
 ---
 
@@ -89,6 +114,7 @@ Long-form, practical engineering guides:
 
 - **How to Forecast Cloud Costs (Without Lying to Yourself)**  
   A forecasting guide focused on:
+
   - baselines vs growth drivers
   - scenario modeling
   - communicating cost to non-engineers
@@ -124,7 +150,7 @@ The estimator is meant to support thinking — not replace it.
 
 CloudLedger is built with modern, boring, well-understood tools:
 
-- **Next.js (App Router)** — routing, rendering, and structure
+- **Next.js (App Router)** — routing, rendering, structure
 - **React** — UI composition
 - **TypeScript** — correctness and long-term maintainability
 - **Vercel** — hosting, preview deployments, CI/CD
@@ -145,6 +171,7 @@ This may be refactored later once patterns stabilize.
 
 Key directories and files:
 
+```
 app/
 ├─ page.tsx # Home page
 ├─ layout.tsx # Root layout, metadata, navigation
@@ -153,15 +180,16 @@ app/
 │ ├─ reduce-azure-costs/
 │ │ └─ page.tsx # Pillar guide
 │ └─ forecast-cloud-costs/
-│ └─ page.tsx # Forecasting guide
+│   └─ page.tsx # Forecasting guide
 ├─ tools/
 │ ├─ page.tsx # Tools index
 │ └─ cloud-cost-estimator/
-│ └─ page.tsx # Cloud Cost Estimator
+│   └─ page.tsx # Cloud Cost Estimator
 ├─ cases/
 │ └─ page.tsx # Case studies (placeholder)
 ├─ resources/
 │ └─ page.tsx # Resources (placeholder)
+```
 
 ---
 
@@ -169,81 +197,70 @@ app/
 
 ### Local Development
 
-Install dependencies:
+Install dependencies and run locally:
 
 ```bash
 npm install
-
 npm run dev
+```
 
+Build for production and run locally:
+
+```bash
 npm run build
 npm start
+```
 
-Available Scripts
+### Available Scripts
 
-dev — start local dev server
+- `dev` — start local dev server
+- `build` — production build
+- `start` — run production server
+- `lint` — run ESLint
 
-build — production build
-
-start — run production server
-
-lint — run ESLint
-
-Deployment
+## Deployment
 
 CloudLedger is designed for deployment on Vercel.
 
 Typical workflow:
 
-Push to main
+- Push to `main`
+- Vercel builds and deploys automatically
+- Live site updates immediately
+- Preview deployments are created for non-main branches if enabled.
 
-Vercel builds and deploys automatically
-
-Live site updates immediately
-
-Preview deployments are created for non-main branches if enabled.
-
-Roadmap (Near-Term)
+## Roadmap (Near-Term)
 
 Planned additions include:
 
-deeper waste-reduction modeling in the estimator
-
-scenario comparison (baseline vs growth cases)
-
-first real, anonymized case study
-
-additional small planning tools
-
-clearer onboarding paths from guides → tools
+- deeper waste-reduction modeling in the estimator
+- scenario comparison (baseline vs growth cases)
+- first real, anonymized case study
+- additional small planning tools
+- clearer onboarding paths from guides → tools
 
 The roadmap is intentionally short and flexible.
 
-Contributing
+## Contributing
 
 This project currently prioritizes clarity over scale.
 
 If contributing:
 
-keep changes small and explicit
+- keep changes small and explicit
+- prefer readability over abstraction
+- avoid adding dependencies unless necessary
+- treat cost logic as product logic (not just UI)
 
-prefer readability over abstraction
+Run `npm run lint` before pushing.
 
-avoid adding dependencies unless necessary
-
-treat cost logic as product logic (not just UI)
-
-Run npm run lint before pushing.
-
-Philosophy
+## Philosophy
 
 CloudLedger is designed to grow:
 
-slowly
-
-deliberately
-
-visibly
+- slowly
+- deliberately
+- visibly
 
 No hype.
 No dashboards for the sake of dashboards.
@@ -252,4 +269,3 @@ No pretending cloud costs are simpler than they are.
 Just calm, practical systems for understanding where money goes — and how to make it behave.
 
 Last updated: 2026-01-12
-```
