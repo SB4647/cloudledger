@@ -1,10 +1,6 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
-    <main
-      style={{ padding: "4rem", fontFamily: "system-ui", maxWidth: "960px" }}
-    >
+    <main style={{ padding: "4rem", maxWidth: "960px", margin: "0 auto" }}>
       <h1 style={{ fontSize: "3rem", marginBottom: "1rem" }}>
         Stop burning money on cloud infrastructure.
       </h1>
@@ -14,47 +10,54 @@ export default function Home() {
         AWS & Azure costs — without slowing delivery.
       </p>
 
-      <ul style={{ lineHeight: "1.8", marginBottom: "3rem" }}>
+      <ul style={{ lineHeight: "1.8", marginBottom: "2.5rem" }}>
         <li>Find where your cloud bill is leaking</li>
         <li>Enforce budgets automatically</li>
         <li>Forecast costs with confidence</li>
       </ul>
 
-      <div
-        style={{
-          margin: "2rem 0",
-          padding: "1.25rem 1.5rem",
-          border: "1px solid #333",
-          borderRadius: 10,
-          background: "#0d0d0d",
-        }}
-      >
-        <strong>Start here:</strong>
-        <p style={{ margin: "0.5rem 0 0 0" }}>
-          Read{" "}
-          <a
-            href="/guides/reduce-azure-costs"
-            style={{ fontWeight: 600, textDecoration: "underline" }}
-          >
-            How to Reduce Azure Costs for Small Teams
-          </a>{" "}
-          or jump straight into the{" "}
-          <a
-            href="/tools/cloud-cost-estimator"
-            style={{ fontWeight: 600, textDecoration: "underline" }}
-          >
-            Cloud Cost Estimator
-          </a>
-          .
-        </p>
+      <div style={{ display: "flex", gap: "1rem", marginBottom: "3rem" }}>
+        <a
+          href="/guides/reduce-azure-costs"
+          style={{
+            padding: "0.75rem 1.25rem",
+            borderRadius: 8,
+            background: "#fff",
+            color: "#000",
+            textDecoration: "none",
+            fontWeight: 600,
+          }}
+        >
+          Start here
+        </a>
+
+        <a
+          href="/tools/cloud-cost-estimator"
+          style={{
+            padding: "0.75rem 1.25rem",
+            borderRadius: 8,
+            border: "1px solid #333",
+            color: "#fff",
+            textDecoration: "none",
+            fontWeight: 500,
+          }}
+        >
+          Try the estimator
+        </a>
       </div>
 
-      <nav style={{ display: "flex", gap: "2rem", fontSize: "1.1rem" }}>
-        <a href="/guides">Guides</a>
-        <a href="/tools">Tools</a>
-        <a href="/cases">Case Studies</a>
-        <a href="/resources">Resources</a>
-      </nav>
+      <div
+        style={{
+          borderTop: "1px solid #222",
+          paddingTop: "1.5rem",
+          opacity: 0.85,
+        }}
+      >
+        <p>
+          Built for teams who want control of their infrastructure spend without
+          sacrificing delivery speed or engineering autonomy.
+        </p>
+      </div>
     </main>
   );
 }
