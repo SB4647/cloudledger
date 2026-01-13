@@ -68,20 +68,25 @@ export default function Tools() {
     gap: "0.75rem",
   };
 
-  const badgeBaseStyle: CSSProperties = (function () {
-    return {
-      fontSize: "0.75rem",
-      padding: "0.25rem 0.55rem",
-      borderRadius: 999,
-      border: "1px solid #333",
-      opacity: 0.9,
-      whiteSpace: "nowrap",
-    };
-  })();
+  const badgeBaseStyle: CSSProperties = {
+    fontSize: "0.75rem",
+    padding: "0.25rem 0.55rem",
+    borderRadius: 999,
+    border: "1px solid #333",
+    opacity: 0.9,
+    whiteSpace: "nowrap",
+  };
 
   const descStyle: CSSProperties = {
     marginTop: "0.55rem",
     opacity: 0.85,
+    maxWidth: "80ch",
+  };
+
+  const noteStyle: CSSProperties = {
+    marginTop: "0.6rem",
+    fontSize: "0.95rem",
+    opacity: 0.8,
     maxWidth: "80ch",
   };
 
@@ -180,12 +185,19 @@ export default function Tools() {
                   <span style={{ fontWeight: 700 }}>{t.title}</span>
                 )}
 
-                <span style={badgeStyle}>
-                  {t.status === "live" ? "LIVE" : ""}
-                </span>
+                {t.status === "live" ? (
+                  <span style={badgeStyle}>LIVE</span>
+                ) : null}
               </div>
 
               <p style={descStyle}>{t.description}</p>
+
+              {t.title === "Cloud Cost Estimator" ? (
+                <p style={noteStyle}>
+                  Use this before any forecasting work — unstable baselines
+                  invalidate projections.
+                </p>
+              ) : null}
             </div>
           );
         })}
