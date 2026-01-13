@@ -135,7 +135,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 }}
               >
                 <Image
-                  src="/cloudledger-logo.png"
+                  src="/public/cloudledge_logo.png"
                   alt="CloudLedger logo"
                   width={32}
                   height={32}
