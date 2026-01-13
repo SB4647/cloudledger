@@ -366,6 +366,39 @@ export default function ForecastCloudCosts() {
         </p>
       </section>
 
+      <section style={{ marginTop: "3rem" }}>
+        <h2>Common forecasting anti-patterns</h2>
+        <div
+          style={{
+            height: "1px",
+            background: "#222",
+            margin: "0.75rem 0 1.25rem 0",
+          }}
+        />
+
+        <p>
+          If your cloud forecasts consistently miss, it is usually because of
+          one of these patterns.
+        </p>
+
+        <ul>
+          <li>Forecasting from last month’s bill instead of system behavior</li>
+          <li>Treating autoscaling as “free” because it is automatic</li>
+          <li>Ignoring logs, metrics, and data transfer until they explode</li>
+          <li>
+            Assuming worst-case scenarios are unlikely instead of inevitable
+          </li>
+          <li>
+            Producing forecasts with no enforcement or architectural limits
+          </li>
+        </ul>
+
+        <p>
+          Forecasting fails when it is treated as accounting. It works when it
+          is treated as an engineering constraint.
+        </p>
+      </section>
+
       <div style={{ marginTop: "3rem", opacity: 0.85 }}>
         Next:{" "}
         <a href="/guides/reduce-azure-costs" style={strongLinkStyle}>
