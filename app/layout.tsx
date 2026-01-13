@@ -60,7 +60,8 @@ const navStyle: CSSProperties = {
   alignItems: "center",
   justifyContent: "space-between",
   gap: "1rem",
-  height: "64px",
+  height: "150px",
+  padding: "20px",
 };
 
 const brandStyle: CSSProperties = {
@@ -74,7 +75,8 @@ const linksStyle: CSSProperties = {
   display: "flex",
   gap: "1.25rem",
   alignItems: "center",
-  fontSize: "0.95rem",
+  fontSize: "1.5rem",
+  fontWeight: "bold",
 };
 
 const linkStyle: CSSProperties = {
