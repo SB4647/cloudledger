@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
 import { getGuideBySlug, getGuideSlugs } from "@/lib/content/guides";
 
+const GUIDE_SEQUENCE = ["reduce-azure-costs", "forecast-cloud-costs"] as const;
+
 export function generateStaticParams() {
   return getGuideSlugs().map((slug) => ({ slug }));
 }
@@ -11,14 +13,22 @@ export default async function GuidePage({
   params: { slug: string };
 }) {
   const guide = getGuideBySlug(params.slug);
+  if (!guide) return notFound();
 
-  console.log(params);
+  // ✅ bundler-friendly import (don’t store the path in a variable)
+  const GuideContent = (await import(`@/content/guides/${params.slug}.mdx`))
+    .default;
 
-  if (!guide) {
-    return notFound();
-  }
+  // ✅ sequence-based “next guide”
+  const idx = GUIDE_SEQUENCE.indexOf(
+    params.slug as (typeof GUIDE_SEQUENCE)[number]
+  );
+  const nextSlug =
+    idx >= 0 && idx < GUIDE_SEQUENCE.length - 1
+      ? GUIDE_SEQUENCE[idx + 1]
+      : GUIDE_SEQUENCE[0];
 
-  const Guide = (await import(`@/content/guides/${params.slug}.mdx`)).default;
+  const nextGuide = getGuideBySlug(nextSlug);
 
   return (
     <main
@@ -35,8 +45,64 @@ export default async function GuidePage({
         {guide.meta.description}
       </p>
 
+      <div style={{ marginTop: "0.75rem", opacity: 0.75, fontSize: "0.9rem" }}>
+        <span>{guide.meta.readingMinutes} min read</span>
+        {" · "}
+        <span>{guide.meta.publishedAt}</span>
+        {guide.meta.tags?.length ? (
+          <>
+            {" · "}
+            <span>{guide.meta.tags.join(", ")}</span>
+          </>
+        ) : null}
+      </div>
+
       <div style={{ marginTop: "2rem" }}>
-        <Guide />
+        <GuideContent />
+      </div>
+
+      <div
+        style={{
+          marginTop: "3rem",
+          borderTop: "1px solid #222",
+          paddingTop: "1.5rem",
+        }}
+      >
+        <div
+          style={{ opacity: 0.75, fontSize: "0.9rem", marginBottom: "0.75rem" }}
+        >
+          Next steps
+        </div>
+
+        <ul style={{ paddingLeft: "1rem", margin: 0 }}>
+          <li>
+            <a
+              href="/tools/cloud-cost-estimator"
+              style={{
+                fontWeight: 600,
+                textDecoration: "underline",
+                color: "inherit",
+              }}
+            >
+              Use the Cloud Cost Estimator
+            </a>{" "}
+            <span style={{ opacity: 0.8 }}>— model baseline + scenarios.</span>
+          </li>
+
+          <li style={{ marginTop: "0.5rem" }}>
+            <a
+              href={`/guides/${nextSlug}`}
+              style={{
+                fontWeight: 600,
+                textDecoration: "underline",
+                color: "inherit",
+              }}
+            >
+              {nextGuide?.meta.title ?? "Next guide"}
+            </a>{" "}
+            <span style={{ opacity: 0.8 }}>— continue the sequence.</span>
+          </li>
+        </ul>
       </div>
     </main>
   );
