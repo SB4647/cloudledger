@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CSSProperties, ReactNode } from "react";
@@ -124,8 +125,23 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <header style={headerStyle}>
           <div style={containerStyle}>
             <nav style={navStyle}>
-              <Link href="/" style={brandStyle}>
-                CloudLedger
+              <Link
+                href="/"
+                style={{
+                  ...brandStyle,
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.6rem",
+                }}
+              >
+                <Image
+                  src="/cloudledger-logo.png"
+                  alt="CloudLedger logo"
+                  width={32}
+                  height={32}
+                  priority
+                />
+                <span>CloudLedger</span>
               </Link>
 
               <div style={linksStyle}>
