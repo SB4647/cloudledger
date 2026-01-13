@@ -3,6 +3,7 @@
 import { CSSProperties, useMemo, useState } from "react";
 
 type FieldKey = "compute" | "storage" | "logs" | "bandwidth" | "other";
+const FX_RATE_USD_TO_AUD = 1.55; // static on purpose (simple + stable)
 
 export default function CloudCostEstimator() {
   const [compute, setCompute] = useState(0);
@@ -10,20 +11,33 @@ export default function CloudCostEstimator() {
   const [logs, setLogs] = useState(0);
   const [bandwidth, setBandwidth] = useState(0);
   const [other, setOther] = useState(0);
+  const [currency, setCurrency] = useState<"USD" | "AUD">("USD");
 
   // Scenario
   const [reduction, setReduction] = useState(15);
 
-  const total = compute + storage + logs + bandwidth + other;
-  const buffer10 = total * 1.1;
-  const buffer20 = total * 1.2;
+  // Baseline in USD (your source of truth)
+  const totalUSD = compute + storage + logs + bandwidth + other;
 
-  const reducedTotal = total * (1 - reduction / 100);
-  const monthlySavings = total - reducedTotal;
-  const yearlySavings = monthlySavings * 12;
+  const buffer10USD = totalUSD * 1.1;
+  const buffer20USD = totalUSD * 1.2;
 
-  const formatCurrency = (n: number) =>
-    n.toLocaleString(undefined, { style: "currency", currency: "USD" });
+  const reducedTotalUSD = totalUSD * (1 - reduction / 100);
+  const monthlySavingsUSD = totalUSD - reducedTotalUSD;
+  const yearlySavingsUSD = monthlySavingsUSD * 12;
+
+  // Conversion + formatting (display layer)
+  const fx = currency === "AUD" ? FX_RATE_USD_TO_AUD : 1;
+
+  const formatMoney = (usdValue: number) => {
+    const value = usdValue * fx;
+    const locale = currency === "AUD" ? "en-AU" : "en-US";
+    return new Intl.NumberFormat(locale, {
+      style: "currency",
+      currency,
+      maximumFractionDigits: 2,
+    }).format(value);
+  };
 
   const fields: Array<{
     key: FieldKey;
@@ -85,11 +99,11 @@ export default function CloudCostEstimator() {
     return { rows, top, second, third };
   }, [compute, storage, logs, bandwidth, other]);
 
-  const totalSafe = total <= 0 ? 1 : total;
+  const totalSafe = totalUSD <= 0 ? 1 : totalUSD;
   const topPct = Math.round((breakdown.top.value / totalSafe) * 100);
 
   const insightText =
-    total <= 0
+    totalUSD <= 0
       ? "Add a few numbers on the left and I’ll highlight the biggest cost driver and what to fix first."
       : `Your biggest cost driver is ${breakdown.top.label} (~${topPct}% of total). Start by optimizing that category first, then review ${breakdown.second.label} and ${breakdown.third.label}.`;
 
@@ -110,9 +124,6 @@ export default function CloudCostEstimator() {
     alignItems: "start",
   };
 
-  // Basic responsive tweak without Tailwind: use a media query via inline is not possible,
-  // so we use a simple maxWidth container and let cards stack. If your layout container is wide
-  // enough, this still reads well. If you want true two-column, convert this to CSS classes.
   const twoColHintStyle: CSSProperties = {
     display: "grid",
     gap: "1.25rem",
@@ -120,7 +131,7 @@ export default function CloudCostEstimator() {
     alignItems: "start",
   };
 
-  const useTwoCol = true; // keep on; if it looks cramped, set to false.
+  const useTwoCol = true;
 
   const cardStyle: CSSProperties = {
     padding: "1.25rem",
@@ -241,6 +252,21 @@ export default function CloudCostEstimator() {
     borderColor: "#fff",
   };
 
+  const toggleWrapStyle: CSSProperties = {
+    display: "flex",
+    gap: "0.5rem",
+    marginTop: "0.75rem",
+    flexWrap: "wrap",
+    alignItems: "center",
+  };
+
+  const toggleButton = (active: boolean): CSSProperties => ({
+    ...buttonStyle,
+    padding: "0.45rem 0.7rem",
+    background: active ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.03)",
+    borderColor: active ? "#444" : "#222",
+  });
+
   const shareBoxStyle: CSSProperties = {
     marginTop: "0.75rem",
     padding: "0.9rem",
@@ -254,17 +280,18 @@ export default function CloudCostEstimator() {
     lineHeight: 1.5,
   };
 
-  const shareText = `CloudLedger — Cloud Cost Estimator
-Total: ${formatCurrency(total)}
-10% buffer: ${formatCurrency(buffer10)}
-20% buffer: ${formatCurrency(buffer20)}
+  const shareText = `CloudLedger — Cloud Cost Estimator (${currency})
+Total: ${formatMoney(totalUSD)}
+10% buffer: ${formatMoney(buffer10USD)}
+20% buffer: ${formatMoney(buffer20USD)}
 
 Waste reduction: ${reduction}%
-Projected new total: ${formatCurrency(reducedTotal)}
-Monthly savings: ${formatCurrency(monthlySavings)}
-Yearly savings: ${formatCurrency(yearlySavings)}
+Projected new total: ${formatMoney(reducedTotalUSD)}
+Monthly savings: ${formatMoney(monthlySavingsUSD)}
+Yearly savings: ${formatMoney(yearlySavingsUSD)}
 
-Biggest driver: ${breakdown.top.label}`;
+Biggest driver: ${breakdown.top.label}
+FX used: 1 USD ≈ ${FX_RATE_USD_TO_AUD} AUD (static)`;
 
   const [copied, setCopied] = useState(false);
 
@@ -284,7 +311,6 @@ Biggest driver: ${breakdown.top.label}`;
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1500);
     } catch {
-      // If clipboard fails (some browsers), do nothing.
       setCopied(false);
     }
   };
@@ -298,6 +324,30 @@ Biggest driver: ${breakdown.top.label}`;
           category. You’ll get a baseline, buffers, a savings scenario, and a
           quick “what to fix first” hint.
         </p>
+
+        <div style={toggleWrapStyle}>
+          <span style={{ opacity: 0.8, fontWeight: 700 }}>Display:</span>
+          <button
+            style={toggleButton(currency === "USD")}
+            onClick={() => setCurrency("USD")}
+            type="button"
+          >
+            USD
+          </button>
+          <button
+            style={toggleButton(currency === "AUD")}
+            onClick={() => setCurrency("AUD")}
+            type="button"
+          >
+            AUD
+          </button>
+
+          {currency === "AUD" && (
+            <span style={{ opacity: 0.75 }}>
+              Using static FX: 1 USD ≈ {FX_RATE_USD_TO_AUD} AUD
+            </span>
+          )}
+        </div>
       </div>
 
       <div style={useTwoCol ? twoColHintStyle : gridStyle}>
@@ -310,7 +360,7 @@ Biggest driver: ${breakdown.top.label}`;
               <label key={f.key} style={labelStyle}>
                 <div style={labelRowStyle}>
                   <span style={{ fontWeight: 700 }}>{f.label}</span>
-                  <span style={{ opacity: 0.75 }}>$ / month</span>
+                  <span style={{ opacity: 0.75 }}>{currency} / month</span>
                 </div>
 
                 <input
@@ -329,10 +379,14 @@ Biggest driver: ${breakdown.top.label}`;
           </div>
 
           <div style={buttonRowStyle}>
-            <button style={buttonPrimaryStyle} onClick={copyShare}>
+            <button
+              style={buttonPrimaryStyle}
+              onClick={copyShare}
+              type="button"
+            >
               {copied ? "Copied!" : "Copy summary"}
             </button>
-            <button style={buttonStyle} onClick={reset}>
+            <button style={buttonStyle} onClick={reset} type="button">
               Reset
             </button>
           </div>
@@ -343,17 +397,17 @@ Biggest driver: ${breakdown.top.label}`;
           {/* Estimate */}
           <section style={cardStyle}>
             <h2 style={sectionTitleStyle}>Estimate</h2>
-            <p style={strongValueStyle}>{formatCurrency(total)}</p>
+            <p style={strongValueStyle}>{formatMoney(totalUSD)}</p>
             <p style={mutedStyle}>
               This is your estimated baseline monthly spend across categories.
             </p>
 
             <div style={pillRowStyle}>
               <span style={pillStyle}>
-                10% buffer: {formatCurrency(buffer10)}
+                10% buffer: {formatMoney(buffer10USD)}
               </span>
               <span style={pillStyle}>
-                20% buffer: {formatCurrency(buffer20)}
+                20% buffer: {formatMoney(buffer20USD)}
               </span>
             </div>
 
@@ -372,7 +426,7 @@ Biggest driver: ${breakdown.top.label}`;
                 >
                   <span>{r.label}</span>
                   <span style={{ fontWeight: 700 }}>
-                    {formatCurrency(r.value)}
+                    {formatMoney(r.value)}
                   </span>
                 </div>
               ))}
@@ -386,7 +440,7 @@ Biggest driver: ${breakdown.top.label}`;
               {insightText}
             </p>
 
-            {total > 0 && (
+            {totalUSD > 0 && (
               <>
                 <hr style={hrStyle} />
                 <p style={{ margin: 0, opacity: 0.85 }}>
@@ -427,15 +481,15 @@ Biggest driver: ${breakdown.top.label}`;
             <div style={{ display: "grid", gap: "0.4rem" }}>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span style={{ opacity: 0.85 }}>Projected new total</span>
-                <strong>{formatCurrency(reducedTotal)}</strong>
+                <strong>{formatMoney(reducedTotalUSD)}</strong>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span style={{ opacity: 0.85 }}>Monthly savings</span>
-                <strong>{formatCurrency(monthlySavings)}</strong>
+                <strong>{formatMoney(monthlySavingsUSD)}</strong>
               </div>
               <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <span style={{ opacity: 0.85 }}>Yearly savings</span>
-                <strong>{formatCurrency(yearlySavings)}</strong>
+                <strong>{formatMoney(yearlySavingsUSD)}</strong>
               </div>
             </div>
 
