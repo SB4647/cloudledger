@@ -1,6 +1,16 @@
+import Link from "next/link";
 import { CSSProperties } from "react";
+import { getAllGuidesMeta } from "@/lib/content/guides";
 
 export default function Guides() {
+  const guides = getAllGuidesMeta();
+
+  // handy lookup
+  const bySlug = new Map(guides.map((g) => [g.slug, g]));
+
+  const startHere = bySlug.get("reduce-azure-costs");
+  const thenRead = bySlug.get("forecast-cloud-costs");
+
   const containerStyle: CSSProperties = {
     padding: "4rem 0",
     maxWidth: "900px",
@@ -17,6 +27,7 @@ export default function Guides() {
   const linkStyle: CSSProperties = {
     fontWeight: 600,
     textDecoration: "underline",
+    color: "inherit",
   };
 
   const sectionTitle: CSSProperties = {
@@ -63,18 +74,23 @@ export default function Guides() {
           optimization.
         </p>
 
-        <div style={card}>
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-            <a href="/guides/reduce-azure-costs" style={linkStyle}>
-              How to Reduce Azure Costs for Small Teams
-            </a>
-            <span style={badge}>Foundational</span>
+        {startHere ? (
+          <div style={card}>
+            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+              <Link href={`/guides/${startHere.slug}`} style={linkStyle}>
+                {startHere.title}
+              </Link>
+              <span style={badge}>Foundational</span>
+            </div>
+            <p style={small}>{startHere.description}</p>
           </div>
-          <p style={small}>
-            The highest ROI fixes first: idle compute, log ingestion, data
-            transfer, storage sprawl, and orphaned resources.
-          </p>
-        </div>
+        ) : (
+          <div style={card}>
+            <p style={{ margin: 0, opacity: 0.8 }}>
+              Missing guide: <code>reduce-azure-costs</code>
+            </p>
+          </div>
+        )}
       </section>
 
       <section style={sectionTitle}>
@@ -87,18 +103,23 @@ export default function Guides() {
           drivers and modeling real-world scenarios.
         </p>
 
-        <div style={card}>
-          <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-            <a href="/guides/forecast-cloud-costs" style={linkStyle}>
-              How to Forecast Cloud Costs (Without Lying to Yourself)
-            </a>
-            <span style={badge}>Forecasting</span>
+        {thenRead ? (
+          <div style={card}>
+            <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
+              <Link href={`/guides/${thenRead.slug}`} style={linkStyle}>
+                {thenRead.title}
+              </Link>
+              <span style={badge}>Forecasting</span>
+            </div>
+            <p style={small}>{thenRead.description}</p>
           </div>
-          <p style={small}>
-            A practical model: baseline + growth drivers + buffers — so your
-            forecast stays honest as infrastructure changes.
-          </p>
-        </div>
+        ) : (
+          <div style={card}>
+            <p style={{ margin: 0, opacity: 0.8 }}>
+              Missing guide: <code>forecast-cloud-costs</code>
+            </p>
+          </div>
+        )}
       </section>
 
       <section style={sectionTitle}>

@@ -1,0 +1,147 @@
+---
+title: "How to Forecast Cloud Costs (Without Lying to Yourself)"
+description: "Most cloud forecasts fail because they treat spend like a fixed bill. This guide shows how small teams can build forecasts that stay accurate as infrastructure evolves."
+publishedAt: "2026-01-13"
+tags: ["forecasting", "finops", "cloud"]
+---
+
+Most cloud forecasts fail because they treat costs like a fixed bill instead of a living system. This guide shows how small teams can build forecasts that stay accurate as their infrastructure evolves.
+
+If you're starting from a messy subscription, read **[How to Reduce Azure Costs for Small Teams](/guides/reduce-azure-costs)** first. It shows where to reclaim the biggest savings before you forecast.
+
+This guide is structured as a progression — skim the headings, then read deeply where it matters.
+
+---
+
+## Why most cloud forecasts fail
+
+Cloud forecasts usually fail for one simple reason: they treat cloud spend as a fixed monthly bill instead of a system driven by usage, behavior, and constant change.
+
+Traditional budgeting assumes stable inputs. Cloud infrastructure has the opposite properties:
+
+- workloads scale automatically
+- engineers provision resources continuously
+- pricing changes over time
+- usage patterns evolve as the product grows
+
+> Forecasting works when you model behavior, not invoices.
+
+When teams try to forecast cloud costs using static spreadsheets, they are effectively pretending this complexity does not exist.
+
+Reliable forecasts begin when you stop asking “What will our bill be?” and start asking “What behaviors and systems create our bill?”
+
+---
+
+## Understanding your baseline costs
+
+Your baseline cost is the minimum amount you pay each month simply to keep the system alive.
+
+It includes:
+
+- production compute
+- core databases and storage
+- essential networking and security services
+- monitoring, logging, and backups
+
+> A stable baseline is boring. If it isn’t boring, it isn’t baseline.
+
+The key mistake teams make is mixing baseline costs with experimental or growth-driven costs. When you separate them, forecasting becomes radically more stable.
+
+A healthy baseline is predictable and slow-changing. If yours swings wildly month to month, you don’t have a forecast problem — you have an architecture problem.
+
+---
+
+## Growth drivers that actually move the bill
+
+Most cloud forecasts fail because teams model growth using vague ideas like “more users” or “higher traffic.” Cloud bills do not respond to abstract growth — they respond to very specific technical drivers.
+
+A useful forecast starts by identifying which parts of your system scale automatically, which scale manually, and which do not scale at all.
+
+In practice, almost all cloud spend growth comes from a short list of drivers:
+
+- request volume (API calls, background jobs, queue depth)
+- data growth (rows, objects, backups, retention)
+- compute concurrency (autoscaling ceilings, burst capacity)
+- cross-service chatter (logs, metrics, egress)
+
+Importantly, these drivers are often decoupled from business metrics. A 2× increase in users does not necessarily mean a 2× increase in cost — unless your architecture allows it to.
+
+The goal of forecasting is not to predict usage perfectly. It is to identify which drivers have the power to move the bill, and which are noise.
+
+If you cannot name the top three technical mechanisms that cause your cloud bill to grow, you do not yet have a forecast — only a guess.
+
+Most cloud costs are “driven” by a small set of variables. If you can’t name your drivers, you don’t have a forecast — you have a guess.
+
+- **Traffic / requests:** more requests usually means more compute, more data transfer, more cache pressure.
+- **Data volume:** storage growth, backups, replicas, and retention accumulate quietly.
+- **Observability:** logs, metrics, and traces scale with “chatty” apps and long retention.
+- **Team behavior:** environments, experiments, and “temporary” resources that become permanent.
+
+> Forecast accuracy comes from tracking 3–5 drivers, not 300 line items.
+
+---
+
+## Scenario modeling: best case, expected, worst case
+
+Once you understand your baseline and growth drivers, forecasting becomes a modeling exercise rather than a budgeting one.
+
+Instead of asking for a single number, build three scenarios:
+
+- **Best case:** growth occurs, but efficiency improvements and guardrails absorb most of the impact.
+- **Expected case:** growth follows current patterns with minor optimizations applied.
+- **Worst case:** growth accelerates and hidden coupling causes costs to scale faster than expected.
+
+The mistake most teams make is treating the worst case as “unlikely.” In cloud systems, worst cases are not rare — they are usually just unobserved until traffic arrives.
+
+A good forecast treats the worst case as a design constraint. If the worst case is financially unacceptable, the solution is not a better spreadsheet — it is a change in architecture, limits, or defaults.
+
+This is why forecasts should always connect to real controls: autoscaling caps, budget alerts, retention limits, and service-level ownership.
+
+Forecasting without enforcement is accounting. Forecasting with controls is engineering.
+
+A single number forecast is fragile. A scenario forecast survives reality.
+
+- **Best case:** optimizations land, traffic grows slower, usage stays efficient.
+- **Expected:** normal growth, normal waste, planned changes happen on schedule.
+- **Worst case:** spikes, incidents, new environments, high ingestion, delayed cleanup.
+
+> The goal isn’t perfect prediction — it’s preventing surprise.
+
+---
+
+## How to communicate forecasts to non-engineers
+
+Non-engineers don’t want service-by-service detail. They want: predictability, risk, and what levers exist.
+
+- **Baseline:** “We spend ~$X/month to operate.”
+- **Drivers:** “Costs change when traffic, data, or logging changes.”
+- **Scenarios:** “We expect $Y, worst case is $Z.”
+- **Levers:** “We can reduce spend by doing A/B/C.”
+
+> If you can’t explain the forecast in 30 seconds, it’s not usable.
+
+---
+
+## Connecting forecasts to real controls
+
+Forecasts become real when they connect to actual controls: budgets, alerts, policies, and engineering habits.
+
+Use the **[Cloud Cost Estimator](/tools/cloud-cost-estimator)** to model your current baseline and test scenarios before committing to changes.
+
+---
+
+## Common forecasting anti-patterns
+
+If your cloud forecasts consistently miss, it is usually because of one of these patterns.
+
+- Forecasting from last month’s bill instead of system behavior
+- Treating autoscaling as “free” because it is automatic
+- Ignoring logs, metrics, and data transfer until they explode
+- Assuming worst-case scenarios are unlikely instead of inevitable
+- Producing forecasts with no enforcement or architectural limits
+
+Forecasting fails when it is treated as accounting. It works when it is treated as an engineering constraint.
+
+---
+
+Next: **[Reduce Azure Costs for Small Teams](/guides/reduce-azure-costs)**

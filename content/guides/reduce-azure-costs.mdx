@@ -1,0 +1,107 @@
+---
+title: "How to Reduce Azure Costs for Small Teams"
+description: "A practical system for getting control of Azure spend without slowing delivery: reclaim waste, assign ownership, then enforce guardrails."
+publishedAt: "2026-01-13"
+tags: ["azure", "cost", "finops", "engineering"]
+---
+
+Azure costs don’t blow out because teams are sloppy. They blow out because spending is distributed across services, environments, and owners — and the feedback loop is weak. This guide is a practical system for getting control without slowing delivery.
+
+---
+
+**Who this is for:**
+
+- Small dev teams (1–20) running Azure workloads
+- Founders / CTOs who need predictability, not surprises
+- Anyone inheriting a messy subscription
+
+**What you’ll walk away with:**
+
+- A short list of the biggest cost leaks to hunt first
+- A measurement approach that matches how Azure actually bills
+- Guardrails: budgets, alerts, and policies that don’t annoy engineers
+
+---
+
+Next step: use the **[Cloud Cost Estimator](/tools/cloud-cost-estimator)** to forecast your monthly spend and sanity-check your baseline.
+
+---
+
+**Try it now:**  
+Plug your current numbers into the **[Cloud Cost Estimator](/tools/cloud-cost-estimator)** and explore how much waste you could realistically remove in the next 30–90 days.
+
+---
+
+## Why cloud costs explode
+
+Most Azure “bill shock” comes from a few repeatable patterns:
+
+- **Sprawl:** multiple environments, regions, and resource groups with no ownership map
+- **Always-on:** dev/test resources left running 24/7 because turning things off is manual
+- **Hidden multipliers:** data egress, log ingestion, backups, and “small per-GB” charges that stack up
+- **Wrong defaults:** over-provisioned SKUs chosen early and never revisited
+
+The fix is not “be careful.” The fix is: make cost visible, assign ownership, then enforce guardrails automatically.
+
+---
+
+## The five biggest cost leaks in Azure
+
+1. **Idle compute:** VMs, AKS node pools, App Service plans that are oversized or always-on
+2. **Log & telemetry ingestion:** Log Analytics / App Insights costs scale fast with chatty apps
+3. **Data transfer:** egress + cross-region traffic + CDN misconfigurations
+4. **Storage & backups:** snapshot sprawl, retained backups, premium tiers used by default
+5. **Unowned resources:** orphaned disks, public IPs, old environments, “temporary” resource groups
+
+Small teams should attack these in order because they’re the highest ROI and usually the easiest to fix.
+
+---
+
+## How to measure your real spend
+
+A practical measurement loop looks like this:
+
+1. **Start with the Azure Cost Analysis view** for the subscription, grouped by Service and Resource.
+2. **Tag ownership** (team, environment, app) and track “untagged” as a first-class problem.
+3. **Measure weekly deltas** — not just monthly totals — so you catch changes quickly.
+4. **Separate baseline from experiments** (e.g., new features, load tests) so changes have context.
+
+Your first win is usually reducing “unknown spend” to near zero.
+
+---
+
+## Enforcing budgets without killing velocity
+
+Guardrails that work (and don’t annoy engineers) are:
+
+- **Budgets + alerts:** notify early (50/75/90%) instead of only screaming at 100%
+- **Policy:** prevent obviously wasteful SKUs, regions, or public exposure
+- **Auto-shutdown:** dev/test resources off-hours, with an escape hatch for urgent work
+- **Ownership:** every resource group has a responsible human/team
+
+The trick is making the default path the cheap path.
+
+---
+
+## Forecasting and alerts that actually work
+
+Forecasting becomes reliable when you track:
+
+- **Baseline costs:** the predictable “keep the lights on” portion
+- **Usage drivers:** requests, active users, GB ingested, node count, storage growth
+- **Planned changes:** releases, migrations, new environments
+
+Alerts should fire on *change*, not just “high spend” — e.g. sudden log ingestion spikes or a new service entering the top 5.
+
+---
+
+## Monthly cost control checklist
+
+- Review top 10 services by cost (and the delta vs last month)
+- Find and fix untagged / unowned resources
+- Check idle compute (VMs, node pools, app plans)
+- Audit log ingestion volumes and retention
+- Review storage tiers, snapshots, and backups
+- Confirm budgets/alerts/policies still match reality
+
+Next: we’ll turn this into a real “tool-backed” guide by adding a simple calculator and linking it from this page.
