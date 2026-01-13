@@ -161,6 +161,49 @@ export default function ForecastCloudCosts() {
         <h2 style={h2Style}>Growth drivers that actually move the bill</h2>
         <div style={dividerStyle} />
 
+        <p>
+          Most cloud forecasts fail because teams model growth using vague ideas
+          like “more users” or “higher traffic.” Cloud bills do not respond to
+          abstract growth — they respond to very specific technical drivers.
+        </p>
+
+        <p>
+          A useful forecast starts by identifying which parts of your system
+          scale automatically, which scale manually, and which do not scale at
+          all.
+        </p>
+
+        <p>
+          In practice, almost all cloud spend growth comes from a short list of
+          drivers:
+        </p>
+
+        <div style={{ paddingLeft: "1rem", marginTop: "0.75rem" }}>
+          <ul>
+            <li>request volume (API calls, background jobs, queue depth)</li>
+            <li>data growth (rows, objects, backups, retention)</li>
+            <li>compute concurrency (autoscaling ceilings, burst capacity)</li>
+            <li>cross-service chatter (logs, metrics, egress)</li>
+          </ul>
+        </div>
+
+        <p>
+          Importantly, these drivers are often decoupled from business metrics.
+          A 2× increase in users does not necessarily mean a 2× increase in cost
+          — unless your architecture allows it to.
+        </p>
+
+        <p>
+          The goal of forecasting is not to predict usage perfectly. It is to
+          identify which drivers have the power to move the bill, and which are
+          noise.
+        </p>
+
+        <p>
+          If you cannot name the top three technical mechanisms that cause your
+          cloud bill to grow, you do not yet have a forecast — only a guess.
+        </p>
+
         <p style={paragraphStyle}>
           Most cloud costs are “driven” by a small set of variables. If you
           can’t name your drivers, you don’t have a forecast — you have a guess.
@@ -197,6 +240,53 @@ export default function ForecastCloudCosts() {
           Scenario modeling: best case, expected, worst case
         </h2>
         <div style={dividerStyle} />
+
+        <p>
+          Once you understand your baseline and growth drivers, forecasting
+          becomes a modeling exercise rather than a budgeting one.
+        </p>
+
+        <p>Instead of asking for a single number, build three scenarios:</p>
+
+        <div style={{ paddingLeft: "1rem", marginTop: "0.75rem" }}>
+          <ul>
+            <li>
+              <strong>Best case:</strong> growth occurs, but efficiency
+              improvements and guardrails absorb most of the impact.
+            </li>
+            <li>
+              <strong>Expected case:</strong> growth follows current patterns
+              with minor optimizations applied.
+            </li>
+            <li>
+              <strong>Worst case:</strong> growth accelerates and hidden
+              coupling causes costs to scale faster than expected.
+            </li>
+          </ul>
+        </div>
+
+        <p>
+          The mistake most teams make is treating the worst case as “unlikely.”
+          In cloud systems, worst cases are not rare — they are usually just
+          unobserved until traffic arrives.
+        </p>
+
+        <p>
+          A good forecast treats the worst case as a design constraint. If the
+          worst case is financially unacceptable, the solution is not a better
+          spreadsheet — it is a change in architecture, limits, or defaults.
+        </p>
+
+        <p>
+          This is why forecasts should always connect to real controls:
+          autoscaling caps, budget alerts, retention limits, and service-level
+          ownership.
+        </p>
+
+        <p>
+          Forecasting without enforcement is accounting. Forecasting with
+          controls is engineering.
+        </p>
 
         <p style={paragraphStyle}>
           A single number forecast is fragile. A scenario forecast survives
