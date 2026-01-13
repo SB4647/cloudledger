@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main style={{ padding: "4rem", maxWidth: "960px", margin: "0 auto" }}>
@@ -17,7 +19,7 @@ export default function Home() {
       </ul>
 
       <div style={{ display: "flex", gap: "1rem", marginBottom: "3rem" }}>
-        <a
+        <Link
           href="/guides/reduce-azure-costs"
           style={{
             padding: "0.75rem 1.25rem",
@@ -29,9 +31,9 @@ export default function Home() {
           }}
         >
           Start here
-        </a>
+        </Link>
 
-        <a
+        <Link
           href="/tools/cloud-cost-estimator"
           style={{
             padding: "0.75rem 1.25rem",
@@ -43,7 +45,7 @@ export default function Home() {
           }}
         >
           Try the estimator
-        </a>
+        </Link>
       </div>
 
       <div

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { CSSProperties } from "react";
 
 type ToolCard = {
@@ -113,7 +114,7 @@ export default function Tools() {
     },
     {
       title: "How to Forecast Cloud Costs (Without Lying to Yourself)",
-      href: "/guides/forecast-cloud-costs",
+      href: "/tools/forecast-cloud-costs",
       description:
         "Build forecasts that stay accurate by separating baseline spend from growth drivers and scenario changes.",
       status: "live",
@@ -153,13 +154,13 @@ export default function Tools() {
         <h2 style={stripTitleStyle}>Start here</h2>
         <p style={stripTextStyle}>
           Use the{" "}
-          <a href="/tools/cloud-cost-estimator" style={linkStyle}>
+          <Link href="/tools/cloud-cost-estimator" style={linkStyle}>
             Cloud Cost Estimator
-          </a>{" "}
+          </Link>{" "}
           to get a baseline. Then read{" "}
-          <a href="/guides/reduce-azure-costs" style={linkStyle}>
+          <Link href="/guides/reduce-azure-costs" style={linkStyle}>
             How to Reduce Azure Costs for Small Teams
-          </a>{" "}
+          </Link>
           to find the fastest cost wins (idle compute, logs, storage, egress).
         </p>
       </div>
@@ -178,9 +179,9 @@ export default function Tools() {
             <div key={t.title} style={cardStyle}>
               <div style={titleRowStyle}>
                 {t.href ? (
-                  <a href={t.href} style={linkStyle}>
+                  <Link href={t.href} style={linkStyle}>
                     {t.title}
-                  </a>
+                  </Link>
                 ) : (
                   <span style={{ fontWeight: 700 }}>{t.title}</span>
                 )}

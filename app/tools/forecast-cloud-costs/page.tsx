@@ -71,6 +71,7 @@ export default function ForecastCloudCostsTool() {
     costPerGbLogs,
     growthPct,
     months,
+    scenarioMultipliers,
   ]);
 
   const inputStyle: React.CSSProperties = {
