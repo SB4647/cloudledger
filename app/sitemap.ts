@@ -1,44 +1,28 @@
-// Sitemap generator for Next.js app router
-// Returns an array of sitemap entries consumed by Next's metadata API.
+import { getGuideBySlug, getGuideSlugs } from "@/lib/content/guides";
 import { MetadataRoute } from "next";
 
-/**
- * Generate the sitemap entries for the site.
- *
- * Each entry should include a fully-qualified `url` and an optional
- * `lastModified` date. Next will use this data to emit a sitemap.xml.
- */
+const BASE_URL = "https://cloudledger.dev";
+
 export default function sitemap(): MetadataRoute.Sitemap {
+  const guideEntries: MetadataRoute.Sitemap = getGuideSlugs().map((slug) => {
+    const g = getGuideBySlug(slug);
+
+    const lastModified = g?.meta.updatedAt ?? g?.meta.publishedAt ?? undefined;
+
+    return {
+      url: `${BASE_URL}/guides/${slug}`,
+      lastModified: lastModified ? new Date(lastModified) : undefined,
+    };
+  });
+
   return [
-    // Root homepage
-    {
-      url: "https://cloudledger.dev",
-      lastModified: new Date(),
-    },
-    // Guides listing page
-    {
-      url: "https://cloudledger.dev/guides",
-      lastModified: new Date(),
-    },
-    // Specific guide: reducing Azure costs
-    {
-      url: "https://cloudledger.dev/guides/reduce-azure-costs",
-      lastModified: new Date(),
-    },
-    // Specific guide: forecasting cloud costs
-    {
-      url: "https://cloudledger.dev/guides/forecast-cloud-costs",
-      lastModified: new Date(),
-    },
-    // Tools listing page
-    {
-      url: "https://cloudledger.dev/tools",
-      lastModified: new Date(),
-    },
-    // Specific tool: cloud cost estimator
-    {
-      url: "https://cloudledger.dev/tools/cloud-cost-estimator",
-      lastModified: new Date(),
-    },
+    { url: BASE_URL },
+    { url: `${BASE_URL}/guides` },
+    ...guideEntries,
+    { url: `${BASE_URL}/tools` },
+    { url: `${BASE_URL}/tools/cloud-cost-estimator` },
+    { url: `${BASE_URL}/tools/forecast-cloud-costs` }, // <-- make sure this matches your actual route
+    { url: `${BASE_URL}/cases` },
+    { url: `${BASE_URL}/resources` },
   ];
 }
