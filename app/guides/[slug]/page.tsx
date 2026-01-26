@@ -1,10 +1,16 @@
 import { notFound } from "next/navigation";
-import { getGuideBySlug, getGuideSlugs } from "@/lib/content/guides";
+import { getGuideBySlug } from "@/lib/content/guides";
 
 const GUIDE_SEQUENCE = ["reduce-azure-costs", "forecast-cloud-costs"] as const;
 
+const GUIDE_MODULES = {
+  "reduce-azure-costs": () => import("@/content/guides/reduce-azure-costs.mdx"),
+  "forecast-cloud-costs": () =>
+    import("@/content/guides/forecast-cloud-costs.mdx"),
+} as const;
+
 export function generateStaticParams() {
-  return getGuideSlugs().map((slug) => ({ slug }));
+  return GUIDE_SEQUENCE.map((slug) => ({ slug }));
 }
 
 export default async function GuidePage({
@@ -13,16 +19,24 @@ export default async function GuidePage({
   params: { slug: string };
 }) {
   const guide = getGuideBySlug(params.slug);
-  if (!guide) return notFound();
 
-  // ✅ bundler-friendly import (don’t store the path in a variable)
-  const GuideContent = (await import(`@/content/guides/${params.slug}.mdx`))
-    .default;
+  if (!guide) {
+    return notFound();
+  }
+
+  const loader = GUIDE_MODULES[params.slug as keyof typeof GUIDE_MODULES];
+
+  if (!loader) {
+    return notFound();
+  }
+
+  const GuideContent = (await loader()).default;
 
   // ✅ sequence-based “next guide”
   const idx = GUIDE_SEQUENCE.indexOf(
-    params.slug as (typeof GUIDE_SEQUENCE)[number]
+    params.slug as (typeof GUIDE_SEQUENCE)[number],
   );
+
   const nextSlug =
     idx >= 0 && idx < GUIDE_SEQUENCE.length - 1
       ? GUIDE_SEQUENCE[idx + 1]
