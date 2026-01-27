@@ -10,7 +10,9 @@ const GUIDE_MODULES = {
 } as const;
 
 export function generateStaticParams() {
-  return GUIDE_SEQUENCE.map((slug) => ({ slug }));
+  const params = GUIDE_SEQUENCE.map((slug) => ({ slug }));
+
+  return params;
 }
 
 export default async function GuidePage({
@@ -18,13 +20,15 @@ export default async function GuidePage({
 }: {
   params: { slug: string };
 }) {
-  const guide = getGuideBySlug(params.slug);
+  const { slug } = await Promise.resolve(params);
+
+  const guide = getGuideBySlug(slug);
 
   if (!guide) {
     return notFound();
   }
 
-  const loader = GUIDE_MODULES[params.slug as keyof typeof GUIDE_MODULES];
+  const loader = GUIDE_MODULES[slug as keyof typeof GUIDE_MODULES];
 
   if (!loader) {
     return notFound();
@@ -33,9 +37,7 @@ export default async function GuidePage({
   const GuideContent = (await loader()).default;
 
   // ✅ sequence-based “next guide”
-  const idx = GUIDE_SEQUENCE.indexOf(
-    params.slug as (typeof GUIDE_SEQUENCE)[number],
-  );
+  const idx = GUIDE_SEQUENCE.indexOf(slug as (typeof GUIDE_SEQUENCE)[number]);
 
   const nextSlug =
     idx >= 0 && idx < GUIDE_SEQUENCE.length - 1
