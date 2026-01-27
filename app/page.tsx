@@ -48,6 +48,11 @@ export default function Home() {
         </Link>
       </div>
 
+      <p style={{ opacity: 0.8, marginTop: "0.75rem", maxWidth: 520 }}>
+        Start with our foundational guide on reducing Azure costs for small
+        teams before using any tools.
+      </p>
+
       <div
         style={{
           borderTop: "1px solid #222",
