@@ -152,6 +152,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 <Link href="/tools" style={linkStyle}>
                   Tools
                 </Link>
+                <Link href="/pricing" style={linkStyle}>
+                  Pricing
+                </Link>
+                <Link href="/account" style={linkStyle}>
+                  Account
+                </Link>
                 <Link href="/cases" style={linkStyle}>
                   Case Studies
                 </Link>

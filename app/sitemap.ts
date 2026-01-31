@@ -27,6 +27,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/tools` },
     { url: `${BASE_URL}/tools/cloud-cost-estimator` },
     { url: `${BASE_URL}/tools/forecast-cloud-costs` },
+    { url: `${BASE_URL}/pricing` },
     { url: `${BASE_URL}/cases` },
     { url: `${BASE_URL}/resources` },
   ];
